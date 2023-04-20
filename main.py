@@ -10,7 +10,7 @@ app = Flask(__name__)
 
 @app.route('/', methods=['POST'])
 def handle():
-    return handle_agent(Sms77VoiceAgent, request)
+    return handle_agent(SevenVoiceAgent, request)
 
 
 def handle_agent(cls, req):
@@ -32,7 +32,7 @@ def handle_agent(cls, req):
     return jsonify(response)
 
 
-class Sms77VoiceAgent:
+class SevenVoiceAgent:
     def __init__(self, params):
         """Set some convenience variables.
         Object is created from scratch on each method invocation"""
@@ -47,15 +47,15 @@ class Sms77VoiceAgent:
         return {
             'result': {
                 'default_options': {
-                    'apiKey': '{% credential sms77_api_key %}',
+                    'apiKey': '{% credential seven_api_key %}',
                     'from': None,
                     'text': None,
                     'to': None,
                     'xml': False,
                 },
-                'description': 'Agent to issue Text2Speech calls via Sms77.io.',
-                'display_name': 'Sms77 Voice Agent',
-                'name': 'Sms77VoiceAgent',
+                'description': 'Agent to issue Text2Speech calls via seven.io.',
+                'display_name': 'seven Voice Agent',
+                'name': 'SevenVoiceAgent',
             }
         }
 
@@ -86,7 +86,7 @@ class Sms77VoiceAgent:
 
         self.memory['last_message'] = payload
 
-        api_key = payload.pop('apiKey', os.getenv('SMS77_API_KEY'))
+        api_key = payload.pop('apiKey', os.getenv('SEVEN_API_KEY'))
         if api_key is None:
             errors.append('Missing API key')
 
